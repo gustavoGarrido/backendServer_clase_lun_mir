@@ -19,7 +19,8 @@ server.app.use(bodyPaser.json());
 
 //Rutas de la app
 
-server.app.use('/users', userRoutes);
+server.app.use('/users',    userRoutes);
+server.app.use('/usersSql', userRoutes);
 
 //Conexion mySQL
 
