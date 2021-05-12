@@ -52,7 +52,7 @@ userRoutes.post('/login', (req:Request, res:Response)=>{
         if(result?.compararPassword(body.password)){
 
             const userToken = Token.getJwtToken({
-                _id:result.id,
+                id:result._id,
                 nombre: result.nombre,
                 avatar: result.avatar
             });

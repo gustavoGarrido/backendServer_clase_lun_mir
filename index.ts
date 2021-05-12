@@ -4,6 +4,7 @@ import mysql from 'mysql';
 import {conectionMysql} from './bin/mySqlConection';
 import mongoConection from './bin/mongoConexion';
 import bodyPaser from 'body-parser';
+import postRouter from './routes/post';
 
 
 //Instanciando servidor web
@@ -18,9 +19,9 @@ server.app.use(bodyPaser.urlencoded({extended:true}));
 server.app.use(bodyPaser.json());
 
 //Rutas de la app
-
 server.app.use('/users',    userRoutes);
 server.app.use('/usersSql', userRoutes);
+server.app.use('/post', postRouter);
 
 //Conexion mySQL
 

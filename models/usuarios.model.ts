@@ -1,7 +1,7 @@
 import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
-const usuarioSchema = new Schema({
+const usuarioSchema = new Schema<Iusuario>({
 
     nombre:{
         type:String,
