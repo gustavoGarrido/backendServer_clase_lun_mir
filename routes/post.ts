@@ -1,6 +1,8 @@
 import {Router, Response} from 'express';
 import{verificacionToken} from '../middlewares/authentication'
 import { Post } from '../models/post.models';
+import { json } from 'body-parser';
+import { IfileUpload } from '../interfaces/file-upload';
 
 const postRouter = Router();
 
@@ -29,6 +31,8 @@ postRouter.get('/', async (req:any, res:Response)=>{
     let skip = pagina -1;
     skip = skip*ctd
 
+    // query("select * from personas where id_persona >=? limit 5",[skip])
+
     const post = await Post.find()
                             .sort({_id:-1})
                             .skip(skip)
@@ -41,6 +45,32 @@ postRouter.get('/', async (req:any, res:Response)=>{
         data: post
     })
 
+})
+
+postRouter.post('/upload', verificacionToken, (req:any, res:Response)=>{
+    
+    let imagen:IfileUpload = req.files.imag
+
+    if(!imagen){
+        return res.status(400).json({
+            estado:"error",
+            mensaje: "No se envio imagen"
+        })
+    }
+
+    const validartipoImagen = imagen.mimetype.includes('image');
+
+    if(!validartipoImagen){
+        return res.status(400).json({
+            estado:"error",
+            mensaje: "El file no es una imagen"
+        })
+    }
+
+    res.json({
+        estado: "success",
+        imagen: imagen
+    })
 })
 
 export default postRouter;

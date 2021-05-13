@@ -5,6 +5,8 @@ import {conectionMysql} from './bin/mySqlConection';
 import mongoConection from './bin/mongoConexion';
 import bodyPaser from 'body-parser';
 import postRouter from './routes/post';
+import fileUpload from 'express-fileupload';
+
 
 
 //Instanciando servidor web
@@ -17,6 +19,9 @@ server.start(()=>{
 
 server.app.use(bodyPaser.urlencoded({extended:true}));
 server.app.use(bodyPaser.json());
+
+//fileupload
+server.app.use(fileUpload());
 
 //Rutas de la app
 server.app.use('/users',    userRoutes);
