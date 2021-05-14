@@ -30,11 +30,11 @@ postRouter.get('/', async (req:any, res:Response)=>{
     let pagina = Number(req.query.pagina) || 1;
     let skip = pagina -1;
     skip = skip*ctd
-
+     
     // query("select * from personas where id_persona >=? limit 5",[skip])
 
     const post = await Post.find()
-                            .sort({_id:-1})
+                            .sort({id:-1})   
                             .skip(skip)
                             .limit(ctd)
                             .populate('usuario', '-password')
