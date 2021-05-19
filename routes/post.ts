@@ -3,6 +3,9 @@ import{verificacionToken} from '../middlewares/authentication'
 import { Post } from '../models/post.models';
 import { json } from 'body-parser';
 import { IfileUpload } from '../interfaces/file-upload';
+import FileSystem from '../class/file-system';
+
+const filesystem = new FileSystem();
 
 const postRouter = Router();
 
@@ -10,6 +13,10 @@ postRouter.post('/', verificacionToken, (req:any, res:Response)=>{
     
     const body = req.body;
     body.usuario = req.usuario.id;
+
+    const imagenes = filesystem.imagenDeTempHaciaPost(body.usuario);
+
+    body.img = imagenes
 
     Post.create(body)
         .then(async postDb=>{
@@ -47,7 +54,7 @@ postRouter.get('/', async (req:any, res:Response)=>{
 
 })
 
-postRouter.post('/upload', verificacionToken, (req:any, res:Response)=>{
+postRouter.post('/upload', verificacionToken, async (req:any, res:Response)=>{
     
     let imagen:IfileUpload = req.files.imag
 
@@ -67,10 +74,22 @@ postRouter.post('/upload', verificacionToken, (req:any, res:Response)=>{
         })
     }
 
+    const guardarArchivo = await filesystem.guardarImagenTemporal(req.usuario.id, imagen);
+
     res.json({
         estado: "success",
-        imagen: imagen
-    })
+        imagen: imagen,
+        guardarArchivo: guardarArchivo
+    });
+})
+
+postRouter.get('/imagen/:userId/:img', (req:any, res:Response)=>{
+
+    const userId = req.params.userId;
+    const img = req.params.img;
+
+    const pathFoto = filesystem.getFotoUrl(userId, img);
+    res.sendFile(pathFoto)
 })
 
 export default postRouter;

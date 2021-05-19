@@ -7,5 +7,7 @@ export interface IfileUpload {
     tempFilePath:string,
     truncated: boolean,
     mimetype:string,
-    md5:string
+    md5:string,
+
+    mv:Function
 }
