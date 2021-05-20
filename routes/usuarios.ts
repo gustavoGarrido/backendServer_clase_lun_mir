@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import Token from '../class/token';
 import { verificacionToken } from '../middlewares/authentication';
 import Email from '../class/email'
+import { Irequest } from '../interfaces/requestExpress';
 
 
 const emailClass = new Email();
@@ -17,7 +18,7 @@ const userRoutes = Router();
 //     });
 // });
 
-userRoutes.post('/create', (req:Request, res:Response)=>{
+userRoutes.post('/create', async (req:Request, res:Response)=>{
     
     const user = {
         nombre: req.body.nombre,
@@ -25,18 +26,38 @@ userRoutes.post('/create', (req:Request, res:Response)=>{
         password: bcrypt.hashSync(req.body.password,10)
     };
 
-    Usuario.create(user).then(result=>{
-        res.json({
+    try{
+        const crearUsuario = await Usuario.create(user); //ok
+        const enviarEmail = await emailClass.enviarEmail(user.email, "Creacion cuenta", "Cuenta creada con exito", "");
+    
+        res.json(
+            {
             estado: "success",
-            mensaje: result
+            mensaje: crearUsuario,
+            email: enviarEmail
         })
-    })
-    .catch(error=>{
-        res.json({
-            estado: "error",
-            mensaje: error
-        })
-    });
+
+    }
+    catch(error){
+        const enviarEmail = await emailClass.enviarEmail(user.email, "Error creacion cuenta", "Ha habido un error al crear la cuenta vuelva a intentar mas tarde", "");
+    }
+
+
+    // Usuario.create(user).then(async result=>{
+
+    //     const emailEnviado = await emailClass.enviarEmail(user.email, "Creacion cuenta", "Cuenta creada con exito", "")
+    //     res.json({
+    //         estado: "success",
+    //         mensaje: result,
+    //         email: emailEnviado
+    //     })
+    // })
+    // .catch(error=>{
+    //     res.json({
+    //         estado: "error",
+    //         mensaje: error
+    //     })
+    // });
 });
 
 userRoutes.post('/login', (req:Request, res:Response)=>{
@@ -74,6 +95,12 @@ userRoutes.post('/login', (req:Request, res:Response)=>{
 
 userRoutes.get('/', verificacionToken, async (req:any, res:Response)=>{
 
+    // const request:Irequest = req;
+
+    // const usuario = request.usuario.id
+
+
+    
     console.log(req.usuario);
 
     const emailEnvio = await emailClass.enviarEmail("ingindustrial.gustavo@gmail.com", "prueba envio", "",

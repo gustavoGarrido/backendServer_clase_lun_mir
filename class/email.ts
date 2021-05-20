@@ -36,12 +36,12 @@ export default class Email {
                 subject: asunto,
                 text: cuerpo_email,
                 html: html,
-                attachments:[
-                    {
-                        path: path.resolve(__dirname, '../assets', 'imagen_default.jpg' )
+                // attachments:[
+                //     {
+                //         path: path.resolve(__dirname, '../assets', 'imagen_default.jpg' )
 
-                    }
-                ]
+                //     }
+                // ]
             };
     
             nodemailer.createTestAccount((error)=>{
