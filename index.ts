@@ -6,6 +6,7 @@ import mongoConection from './bin/mongoConexion';
 import bodyPaser from 'body-parser';
 import postRouter from './routes/post';
 import fileUpload from 'express-fileupload';
+import FileSystem from './class/file-system';
 
 
 
@@ -19,6 +20,11 @@ server.start(()=>{
 
 server.app.use(bodyPaser.urlencoded({extended:true}));
 server.app.use(bodyPaser.json());
+
+//validarUpload
+
+const filesystem = new FileSystem();
+filesystem.validarPathUpload();
 
 //fileupload
 server.app.use(fileUpload());

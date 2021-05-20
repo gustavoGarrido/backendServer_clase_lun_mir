@@ -2,7 +2,11 @@ import {Router, Request, Response} from 'express';
 import { Usuario } from '../models/usuarios.model';
 import bcrypt from 'bcrypt';
 import Token from '../class/token';
+import { verificacionToken } from '../middlewares/authentication';
+import Email from '../class/email'
 
+
+const emailClass = new Email();
 
 const userRoutes = Router();
 
@@ -66,6 +70,22 @@ userRoutes.post('/login', (req:Request, res:Response)=>{
             })
         }
     })
+})
+
+userRoutes.get('/', verificacionToken, async (req:any, res:Response)=>{
+
+    console.log(req.usuario);
+
+    const emailEnvio = await emailClass.enviarEmail("ingindustrial.gustavo@gmail.com", "prueba envio", "",
+     "<h2> Titulo con html </h2>");
+
+    res.json({
+        estado:"success",
+        mensaje: emailEnvio
+    })
+
+
+
 })
 
 export default userRoutes;

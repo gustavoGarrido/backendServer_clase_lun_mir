@@ -92,4 +92,8 @@ postRouter.get('/imagen/:userId/:img', (req:any, res:Response)=>{
     res.sendFile(pathFoto)
 })
 
+
+
+//EL OBJETIVO ES QUE CUANDO NUESTRO CODIGO COMPILE GENERE LA CARPETA UPLOADS DENTRO DE LA CARPETA DIST
+
 export default postRouter;

@@ -86,4 +86,11 @@ export default class FileSystem {
         }
 
     }
+
+    validarPathUpload(){
+        const pathUpload = path.resolve(__dirname, '../uploads');
+        if(!fs.existsSync(pathUpload)){
+            fs.mkdirSync(pathUpload);
+        }
+    }
 }
