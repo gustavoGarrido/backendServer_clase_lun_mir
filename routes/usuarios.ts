@@ -94,7 +94,7 @@ userRoutes.post('/login', (req:Request, res:Response)=>{
     })
 })
 
-userRoutes.get('/', verificacionToken, usuarioControllers.payload)
+userRoutes.get('/', verificacionToken, usuarioControllers.payload);
 
 // userRoutes.get('/', verificacionToken, async (req:any, res:Response)=>{
 
