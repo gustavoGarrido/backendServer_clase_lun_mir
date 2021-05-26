@@ -8,7 +8,7 @@ dotenv.config({
 let variables_entorno:any ={
     NODE_ENV: process.env.NODE_ENV || 'development',
     HOST: process.env.HOST || 'localhost',
-    PORT: process.env.PORT || '3001'
+    PORT: process.env.PORT || '3000'
 
 };
 

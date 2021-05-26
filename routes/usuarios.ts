@@ -5,6 +5,7 @@ import Token from '../class/token';
 import { verificacionToken } from '../middlewares/authentication';
 import Email from '../class/email'
 import { Irequest } from '../interfaces/requestExpress';
+import usuarioControllers from '../controllers/usuarios'
 
 
 const emailClass = new Email();
@@ -93,26 +94,24 @@ userRoutes.post('/login', (req:Request, res:Response)=>{
     })
 })
 
-userRoutes.get('/', verificacionToken, async (req:any, res:Response)=>{
+userRoutes.get('/', verificacionToken, usuarioControllers.payload)
 
-    // const request:Irequest = req;
+// userRoutes.get('/', verificacionToken, async (req:any, res:Response)=>{
 
-    // const usuario = request.usuario.id
+//     const request:Irequest = req;
+//     const usuario = request.usuario
 
 
-    
-    console.log(req.usuario);
+//     // const emailEnvio = await emailClass.enviarEmail("ingindustrial.gustavo@gmail.com", "prueba envio", "",
+//     //  "<h2> Titulo con html </h2>");
 
-    const emailEnvio = await emailClass.enviarEmail("ingindustrial.gustavo@gmail.com", "prueba envio", "",
-     "<h2> Titulo con html </h2>");
-
-    res.json({
-        estado:"success",
-        mensaje: emailEnvio
-    })
+//     res.json({
+//         estado:"success",
+//         mensaje: usuario
+//     })
 
 
 
-})
+// })
 
 export default userRoutes;
