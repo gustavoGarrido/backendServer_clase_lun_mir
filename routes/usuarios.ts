@@ -91,24 +91,24 @@ userRoutes.post('/login', (req:Request, res:Response)=>{
     })
 })
 
-userRoutes.get('/', verificacionToken, usuarioControllers.payload);
+// userRoutes.get('/', verificacionToken, usuarioControllers.payload);
 
-// userRoutes.get('/', verificacionToken, async (req:any, res:Response)=>{
+userRoutes.get('/', verificacionToken, async (req:any, res:Response)=>{
 
-//     const request:Irequest = req;
-//     const usuario = request.usuario
-
-
-//     // const emailEnvio = await emailClass.enviarEmail("ingindustrial.gustavo@gmail.com", "prueba envio", "",
-//     //  "<h2> Titulo con html </h2>");
-
-//     res.json({
-//         estado:"success",
-//         mensaje: usuario
-//     })
+    const request:Irequest = req;
+    const usuario = request.usuario
 
 
+    // const emailEnvio = await emailClass.enviarEmail("ingindustrial.gustavo@gmail.com", "prueba envio", "",
+    //  "<h2> Titulo con html </h2>");
 
-// })
+    res.json({
+        estado:"success",
+        mensaje: usuario
+    })
+
+
+
+})
 
 export default userRoutes;

@@ -7,6 +7,8 @@ import bodyPaser from 'body-parser';
 import postRouter from './routes/post';
 import fileUpload from 'express-fileupload';
 import FileSystem from './class/file-system';
+import express from 'express';
+
 
 
 //Instanciando servidor web
@@ -17,8 +19,8 @@ server.start(()=>{
 
 //Body parser
 
-server.app.use(bodyPaser.urlencoded({extended:true}));
-server.app.use(bodyPaser.json());
+server.app.use(bodyPaser.urlencoded({extended:true})); //express.urlencoded({ extended: false })
+server.app.use(bodyPaser.json()); //express.json()
 
 //validarUpload
 
