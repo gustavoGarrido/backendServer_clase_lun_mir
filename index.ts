@@ -8,6 +8,7 @@ import postRouter from './routes/post';
 import fileUpload from 'express-fileupload';
 import FileSystem from './class/file-system';
 import express from 'express';
+import cors from 'cors'
 
 
 
@@ -17,10 +18,12 @@ server.start(()=>{
     console.log(`Servidor corriendo en puerto: ${server.port} y en host ${server.host}`);
 });
 
-//Body parser
+// body parser
+server.app.use(express.urlencoded({ extended: false })); // express.urlencoded({ extended: false })
+server.app.use(express.json()); //express.json()
 
-server.app.use(bodyPaser.urlencoded({extended:true})); //express.urlencoded({ extended: false })
-server.app.use(bodyPaser.json()); //express.json()
+//Cors
+server.app.use(cors());
 
 //validarUpload
 
